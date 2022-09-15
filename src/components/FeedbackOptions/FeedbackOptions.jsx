@@ -1,17 +1,14 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import s from './FeedbackOptions.module.css'
 
-export class FeedbackOptions extends Component { 
-    render() {
-        return (
-            <div className={s.buttonsSet}>
-                {Object.keys(this.props.state).map(item => (
-                    <button className={s.button} type='button' name={item} key={item} onClick={this.props.onLeaveFeedback}>{item}</button>
-                ))}
-            </div>
-        );
-    };
+export function FeedbackOptions({onLeaveFeedback, state}) { 
+    return (
+        <div className={s.buttonsSet}>
+            {Object.keys(state).map(item => (
+                <button className={s.button} type='button' name={item} key={item} onClick={onLeaveFeedback}>{item}</button>
+            ))}
+        </div>
+    );
 };
 
 FeedbackOptions.propTypes = {

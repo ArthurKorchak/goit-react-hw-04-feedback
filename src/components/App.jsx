@@ -1,34 +1,37 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions'
 import { Statistics } from './Statistics/Statistics'
 import { Section } from './Section/Section'
 
-class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
+function App() {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  buttonsOperator = event => {
+  const buttonsOperator = event => {
     const target = event.target.name;
-    this.setState(prevState => {
-      return {[target]: prevState[target] + 1};
-    });
+    switch (target) {
+      case 'good': setGood(prev => prev + 1);
+        break;
+      case 'neutral': setNeutral(prev => prev + 1);
+        break;
+      case 'bad': setBad(prev => prev + 1);
+        break;
+      default:
+        throw new Error('Unexpected value');
+    };
   };
 
-  render() {
-    return (
-      <>
-        <Section title="Please leave feedback">
-          <FeedbackOptions state={this.state} onLeaveFeedback={this.buttonsOperator} />
-        </Section>
-        <Section title="Statistics">
-          <Statistics state={this.state} />
-        </Section>
-      </>
-    );
-  };
+  return (
+    <>
+      <Section title="Please leave feedback">
+        <FeedbackOptions state={{good, neutral, bad}} onLeaveFeedback={buttonsOperator} />
+      </Section>
+      <Section title="Statistics">
+        <Statistics state={{good, neutral, bad}} />
+      </Section>
+    </>
+  );
 };
 
 export default App;
